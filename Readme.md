@@ -178,36 +178,33 @@ This confirms the application's ability to handle large-scale NEM12 data files e
    To improve portability, automate environment setup, and enhance user convenience, the entire application—including PostgreSQL—is containerized using Docker and Docker Compose. This approach ensures the application can run seamlessly in any environment, regardless of whether PostgreSQL is installed locally, by automatically launching a PostgreSQL container alongside the Java app container. It also simplifies the setup process and enables automated database migrations on startup, reducing manual configuration and setup effort for users and developers alike.
 
 
-✅ Q2. What would you have done differently if you had more time?
-1. NMI Register-Level Aggregation and Storage:
-   Currently, data is flattened per NMI without register-level granularity. With more time, I would have normalized the schema to store each nmi + suffix combination separately, allowing support for multi-energy households (e.g., solar, battery, grid).
+✅ **Q2. What would you have done differently if you had more time?**
 
-2. Quality Event (400) Parsing for V Quality Flags:
-   Records with quality method V require dynamic interpretation based on subsequent 400 records. I would refactor the parser to:
+1. **NMI Register-Level Aggregation and Storage:**
+   Currently, data is flattened per NMI without register-level granularity. With more time, I would have normalized the schema to store each `nmi + suffix` combination separately, allowing support for multi-energy households (e.g., solar, battery, grid).
 
-* Detect and buffer V-flagged 300s,
+2. **Quality Event (400) Parsing for V Quality Flags:**
+   Records with quality method `V` require dynamic interpretation based on subsequent 400 records. I would refactor the parser to:
 
-* Correlate them with associated 400s,
+   * Detect and buffer `V`-flagged 300s,
+   * Correlate them with associated 400s,
+   * Store granular quality metadata per interval.
 
-* Store granular quality metadata per interval.
-
-3. B2B Data (500) Integration:
+3. **B2B Data (500) Integration:**
    Manual meter reads from 500 records were parsed but not persisted. I would introduce logic to store this data separately, with a possible fallback mechanism to use 500 data in case of missing 300 readings.
 
-4. Dockerization:
-   To improve portability and CI/CD compatibility, I would containerize both the Java application and PostgreSQL database using Docker Compose, with auto-migrations on container startup.
+4. **Client UI and Energy Analysis Tools:**
+   Given additional time, I would have developed a lightweight client interface or integrated data visualization tools (e.g., using Python, R, or web-based dashboards) to analyze energy consumption patterns, detect anomalies, or generate reports from the stored data—making the solution more useful for end-users and analysts.
 
-5. Centralized Logging (e.g., SLF4J + Logback):
-   Current implementation uses System.out and System.err. I would introduce a logging facade (e.g., SLF4J) to enable:
+5. **Centralized Logging (e.g., SLF4J + Logback):**
+   The current implementation uses `System.out` and `System.err`. I would introduce a logging facade (e.g., SLF4J) to enable:
 
-* Log level control (INFO, DEBUG, ERROR),
+   * Log level control (INFO, DEBUG, ERROR),
+   * File-based or remote logging (e.g., ELK stack),
+   * Better traceability in production environments.
 
-* File-based or remote logging (e.g., to ELK stack),
-
-* Better traceability in production.
-
-6. Parallelization / Asynchronous Processing:
-   The current line-by-line model is sequential. I would explore stream partitioning and thread-safe batch queues to achieve parallel or reactive processing, especially beneficial for multi-core ingestion servers.
+6. **Parallelization / Asynchronous Processing:**
+   The current line-by-line model is sequential. I would explore stream partitioning and thread-safe batch queues to enable parallel or reactive processing—especially beneficial for multi-core ingestion environments.
 
 
 ✅ Q3. What is the rationale for the design choices that you have made?
