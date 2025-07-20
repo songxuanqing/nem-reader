@@ -120,6 +120,23 @@ This setup ensures the container has access to your local files and that you can
 
 
 
+### ⚡ Performance
+
+The application was tested with **43,223 unique date entries** and a total of **2,074,704 consumption records** (at 30-minute intervals).
+On the following system, **all transactions completed and were successfully stored in under 2 minutes**:
+
+* **OS**: Windows 11 Home (Build 26100)
+* **CPU**: AMD Ryzen (2.1GHz, 4 cores)
+* **RAM**: 10 GB
+* **Storage**: SSD
+* **JVM**: Java 21
+* **Database**: PostgreSQL 17.5-3 (windows x64)
+* **Data Set**: src/resources/sample/sample-nem12.csv
+
+This confirms the application's ability to handle large-scale NEM12 data files efficiently on a typical consumer-grade machine.
+
+---
+
 
 # Answering the following questions:
 
