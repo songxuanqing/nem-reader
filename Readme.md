@@ -138,10 +138,7 @@ This confirms the application's ability to handle large-scale NEM12 data files e
 ---
 
 
-# Answering the following questions:
-
-
-### ✅ Q1. What is the rationale for the technologies you have decided to use?
+### ✅  Rationale for the technologies?
 
 1. **Java (Core Language):**
    Java offers a strong type system, mature multithreading, and rich standard libraries (e.g., `java.nio`, `java.time`, `java.sql`) which make it ideal for building a robust, file-based data ingestion system. Its object-oriented model also facilitates encapsulating the semantics of NEM12 data records (types 200, 300, 400, 500) into maintainable classes.
@@ -178,7 +175,7 @@ This confirms the application's ability to handle large-scale NEM12 data files e
    To improve portability, automate environment setup, and enhance user convenience, the entire application—including PostgreSQL—is containerized using Docker and Docker Compose. This approach ensures the application can run seamlessly in any environment, regardless of whether PostgreSQL is installed locally, by automatically launching a PostgreSQL container alongside the Java app container. It also simplifies the setup process and enables automated database migrations on startup, reducing manual configuration and setup effort for users and developers alike.
 
 
-✅ **Q2. What would you have done differently if you had more time?**
+✅ **Improvements**
 
 1. **NMI Register-Level Aggregation and Storage:**
    Currently, data is flattened per NMI without register-level granularity. With more time, I would have normalized the schema to store each `nmi + suffix` combination separately, allowing support for multi-energy households (e.g., solar, battery, grid).
@@ -207,7 +204,7 @@ This confirms the application's ability to handle large-scale NEM12 data files e
    The current line-by-line model is sequential. I would explore stream partitioning and thread-safe batch queues to enable parallel or reactive processing—especially beneficial for multi-core ingestion environments.
 
 
-✅ Q3. What is the rationale for the design choices that you have made?
+✅ Rationale for the design choices
 
 1. API Design
 
